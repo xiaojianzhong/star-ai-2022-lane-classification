@@ -33,7 +33,7 @@ $ pip install -r requirements.txt
 ## <a name="configuration-name-format"></a> 配置文件名格式
 
 ```
-{dataset}_{method}_{resolution}_bs{batch size}_{criterion}_{optimizer}_lr{lr}_{scheduler}_{epochs}e_{comment}.yaml
+{dataset}_{method}_{resolution}_bs{batch size}_{criterion}_{optimizer}_lr{lr}_{scheduler}_{epochs}e.yaml
 ```
 
 - `{dataset}`: 数据集名称，如 `lane`
@@ -45,7 +45,6 @@ $ pip install -r requirements.txt
 - `{lr}`: 用于训练的基础学习率，如 `0.1`，`0.01`
 - `{scheduler}`: 学习率调整器，如 `exp`，`poly`
 - `{epochs}`: 训练轮数，如 `8`，`16`
-- `{comment}`: 本次训练所做出的改动，如 `use-new-backbone`，`add-data-augmentation`
 
 ## <a name="train"></a> 训练
 

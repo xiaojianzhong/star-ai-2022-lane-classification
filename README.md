@@ -33,7 +33,7 @@ $ pip install -r requirements.txt
 ## <a name="configuration-name-format"></a> Configuration Name Format
 
 ```
-{dataset}_{method}_{resolution}_bs{batch size}_{criterion}_{optimizer}_lr{lr}_{scheduler}_{epochs}e_{comment}.yaml
+{dataset}_{method}_{resolution}_bs{batch size}_{criterion}_{optimizer}_lr{lr}_{scheduler}_{epochs}e.yaml
 ```
 
 - `{dataset}`: dataset name like `lane`, etc.
@@ -45,7 +45,6 @@ $ pip install -r requirements.txt
 - `{lr}`: basic learning rate for training, e.g. `0.1`, `0.01`.
 - `{scheduler}`: scheduler name like `exp`, `poly`, etc.
 - `{epochs}`: epochs for training, e.g. `8`, `16`.
-- `{comment}`: modification for current training, e.g. `use-new-backbone`, `add-data-augmentation`.
 
 ## <a name="train"></a> Train
 

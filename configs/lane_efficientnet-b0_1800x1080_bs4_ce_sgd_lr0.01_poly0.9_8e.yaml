@@ -1,0 +1,41 @@
+DATASET:
+  NAME: 'lane'
+  ROOT: '/home/zxj/Documents/star-ai-2022/lane'
+  NUM_CLASSES: 2
+  TRANSFORM:
+    ADAPTIVE_CROP:
+      ORIGIN_HEIGHTS: [1560, 2340, 2400]
+      ORIGIN_WIDTHS: [720, 1080, 1080]
+      TOPS: [200, 300, 300]
+      LEFTS: [0, 0, 0]
+      HEIGHTS: [1200, 1800, 1800]
+      WIDTHS: [720, 1080, 1080]
+    RESIZE:
+      HEIGHT: 1800
+      WIDTH: 1080
+    NORMALIZE:
+      MEAN: [0.71415253, 0.71171823, 0.67867415]
+      STD: [0.32737697, 0.33973122, 0.29741103]
+
+DATALOADER:
+  BATCH_SIZE: 4
+  NUM_WORKERS: 4
+
+MODEL:
+  NAME: 'efficientnet-b0'
+
+CRITERION:
+  NAME: 'ce'
+
+OPTIMIZER:
+  NAME: 'sgd'
+  LR: 0.01
+  WEIGHT_DECAY: 0.0005
+
+SCHEDULER:
+  NAME: 'poly'
+  GAMMA: 0.9
+  BY_ITERATION: true
+
+EPOCHS: 8
+ITERATIONS: 58328  # (29164 // 4) * 8
