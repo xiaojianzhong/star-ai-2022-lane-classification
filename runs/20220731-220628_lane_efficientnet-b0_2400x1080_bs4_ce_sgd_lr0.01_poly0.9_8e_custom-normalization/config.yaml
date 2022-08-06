@@ -1,0 +1,43 @@
+CRITERION:
+  NAME: ce
+DATALOADER:
+  BATCH_SIZE: 4
+  NUM_WORKERS: 4
+DATASET:
+  NAME: lane
+  NUM_CLASSES: 2
+  ROOT: F:\Yao\Data\road
+  TRANSFORM:
+    ADAPTIVE_CROP:
+      HEIGHTS: []
+      LEFTS: []
+      ORIGIN_HEIGHTS: []
+      ORIGIN_WIDTHS: []
+      TOPS: []
+      WIDTHS: []
+    NORMALIZE:
+      MEAN:
+      - 0.71415253
+      - 0.71171823
+      - 0.67867415
+      STD:
+      - 0.32737697
+      - 0.33973122
+      - 0.29741103
+    RESIZE:
+      HEIGHT: 2400
+      WIDTH: 1080
+EPOCHS: 8
+ITERATIONS: 58328
+MODEL:
+  NAME: efficientnet-b0
+OPTIMIZER:
+  LR: 0.01
+  MOMENTUM: 0.0
+  NAME: sgd
+  WEIGHT_DECAY: 0.0005
+SCHEDULER:
+  BY_EPOCH: false
+  BY_ITERATION: true
+  GAMMA: 0.9
+  NAME: poly

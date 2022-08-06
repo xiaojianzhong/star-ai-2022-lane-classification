@@ -1,0 +1,43 @@
+CRITERION:
+  NAME: ml-sm
+DATALOADER:
+  BATCH_SIZE: 4
+  NUM_WORKERS: 4
+DATASET:
+  NAME: lane
+  NUM_CLASSES: 7
+  ROOT: F:/Yao/Data/road/
+  TRANSFORM:
+    ADAPTIVE_CROP:
+      HEIGHTS: []
+      LEFTS: []
+      ORIGIN_HEIGHTS: []
+      ORIGIN_WIDTHS: []
+      TOPS: []
+      WIDTHS: []
+    NORMALIZE:
+      MEAN:
+      - 0.485
+      - 0.456
+      - 0.406
+      STD:
+      - 0.229
+      - 0.224
+      - 0.225
+    RESIZE:
+      HEIGHT: 2400
+      WIDTH: 1080
+EPOCHS: 8
+ITERATIONS: 58328
+MODEL:
+  NAME: efficientnet-b0
+OPTIMIZER:
+  LR: 0.01
+  MOMENTUM: 0.0
+  NAME: sgd
+  WEIGHT_DECAY: 0.0005
+SCHEDULER:
+  BY_EPOCH: true
+  BY_ITERATION: false
+  GAMMA: 0.9
+  NAME: exp
