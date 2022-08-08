@@ -39,11 +39,7 @@ def main():
     for i, _ in df.iterrows():
         df.loc[i, 'imagename'] = dfs[0].loc[i, 'imagename']
 
-        probs = np.empty(n)
-        for j, df in enumerate(dfs):
-            prob = df.loc[i, 'defect_prob']
-            probs[j] = prob
-
+        probs = np.array([df.loc[i, 'defect_prob'] for df in dfs])
         if args.merge_by == 'vote':  # 投票
             num_positive = (probs > 0.5).sum()
             num_negative = (probs < 0.5).sum()
