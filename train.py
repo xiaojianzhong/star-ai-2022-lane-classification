@@ -90,9 +90,9 @@ def main():
         f.write(CFG.dump())
 
     # build dataset
-    train_dataset = build_dataset()
+    train_dataset = build_dataset('train')
     # build dataloader
-    train_dataloader = build_dataloader(train_dataset)
+    train_dataloader = build_dataloader(train_dataset, 'train')
     # build model
     model = build_model()
     model = DataParallel(model)
@@ -100,7 +100,7 @@ def main():
     # dump model
     shutil.copyfile(inspect.getfile(model.module.__class__), os.path.join(path, 'model.py'))
     with open(os.path.join(path, 'model.txt'), 'w') as f:
-        f.write(str(torchinfo.summary(model.module, input_size=(1, *train_dataset[0][0].shape), verbose=0)))
+        f.write(str(torchinfo.summary(model.module, input_size=(1, *train_dataset[0]['x'].shape), verbose=0)))
     # build criterion
     criterion = build_criterion()
     criterion.cuda()
@@ -142,7 +142,7 @@ def main():
         model.train()
         metric.reset()  # reset metric
         train_bar = tqdm(train_dataloader, desc='train', ascii=True)
-        for x, gt in train_bar:
+        for sample in train_bar:
             iteration += 1
             if iteration > CFG.ITERATIONS:
                 writer.close()
@@ -151,6 +151,7 @@ def main():
             lr = optimizer.param_groups[0]['lr']
             writer.add_scalar('lr-iteration', lr, iteration)
 
+            x, gt = sample['x'], sample['gt']
             x, gt = x.cuda(), gt.cuda()
             y = model(x)
             # pred = (torch.sigmoid(y) > 0.5)
@@ -176,16 +177,15 @@ def main():
                 'f1': f'{metric.f1():.2f}',
             })
 
-            # adjust learning rate if specified
             if CFG.SCHEDULER.BY_ITERATION:
                 scheduler.step()
+
         writer.add_scalar('train/loss-epoch', metric.loss(), epoch)
         writer.add_scalar('train/precision-epoch', metric.precision(), epoch)
         writer.add_scalar('train/recall-epoch', metric.recall(), epoch)
         writer.add_scalar('train/f1-epoch', metric.f1(), epoch)
         writer.add_scalar('train/seconds-epoch', metric.seconds(), epoch)
 
-        # adjust learning rate if specified
         if CFG.SCHEDULER.BY_EPOCH:
             scheduler.step()
 

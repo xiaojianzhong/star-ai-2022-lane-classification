@@ -25,20 +25,31 @@ def build_transform():
     ])
 
 
-def build_dataset():
+def build_dataset(split):
     if CFG.DATASET.NAME == 'lane':
         dataset = StarAI2022LaneDataset(CFG.DATASET.ROOT,
+                                        split,
                                         transform=build_transform())
     else:
         raise NotImplementedError(f'invalid dataset: {CFG.DATASET.NAME}')
     return dataset
 
 
-def build_dataloader(dataset):
-    return DataLoader(dataset,
-                      batch_size=CFG.DATALOADER.BATCH_SIZE,
-                      # shuffle=True,
-                      sampler=ImbalancedDatasetSampler(dataset),  # use imbalanced dataset sampler
-                      num_workers=CFG.DATALOADER.NUM_WORKERS,
-                      pin_memory=True,
-                      drop_last=True)
+def build_dataloader(dataset, split):
+    if split == 'train':
+        return DataLoader(dataset,
+                          batch_size=CFG.DATALOADER.BATCH_SIZE,
+                          # shuffle=True,
+                          sampler=ImbalancedDatasetSampler(dataset),  # use imbalanced dataset sampler
+                          num_workers=CFG.DATALOADER.NUM_WORKERS,
+                          pin_memory=True,
+                          drop_last=True)
+    elif split == 'test':
+        return DataLoader(dataset,
+                          batch_size=CFG.DATALOADER.BATCH_SIZE,
+                          shuffle=False,
+                          num_workers=CFG.DATALOADER.NUM_WORKERS,
+                          pin_memory=True,
+                          drop_last=False)
+    else:
+        raise NotImplementedError(f'invalid split: {split}')

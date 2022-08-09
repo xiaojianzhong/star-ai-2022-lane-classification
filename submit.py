@@ -5,11 +5,11 @@ import warnings
 
 import pandas as pd
 import torch
-from PIL import Image
+from torch.nn import DataParallel
 from tqdm import tqdm
 
 from configs import CFG
-from datas import build_transform
+from datas import build_dataset, build_dataloader
 from models import build_model
 
 
@@ -53,43 +53,37 @@ def main():
     # merge config with custom configs from command line arguments
     CFG.merge_from_list(args.configs)
 
-    # build transform
-    transform = build_transform()
-
+    # build dataset
+    test_dataset = build_dataset('test')
+    # build dataloader
+    test_dataloader = build_dataloader(test_dataset, 'test')
     # build model
     model = build_model()
+    model = DataParallel(model)
     model.cuda()
 
     # load checkpoint
     if not os.path.isfile(args.checkpoint):
         raise RuntimeError(f'checkpoint {args.checkpoint} not found')
     checkpoint = torch.load(args.checkpoint)
-    model.load_state_dict(checkpoint['model']['state_dict'], strict=True)
+    model.module.load_state_dict(checkpoint['model']['state_dict'], strict=True)
     logging.info(f'load checkpoint {args.checkpoint}')
 
     df = pd.DataFrame(columns=['imagename', 'defect_prob'])
 
-    images_dir = os.path.join(CFG.DATASET.ROOT, 'test_images')
-    bar = tqdm(sorted(os.listdir(images_dir)), ascii=True)
-    for image_name in bar:
-        image_path = os.path.join(images_dir, image_name)
-        image = Image.open(image_path).convert('RGB')
-        image = transform(image)
-        x = image
-        x = x.cuda()
-        x = x.unsqueeze(0)
+    with torch.no_grad():
+        test_bar = tqdm(test_dataloader, desc='test', ascii=True)
+        for sample in test_bar:
+            x, name = sample['x'], sample['name']
+            x = x.cuda()
 
-        y = model(x)
-        y = y.squeeze(0)
-        # prob = torch.max(torch.sigmoid(y), dim=0)[0].item()
-        prob = torch.softmax(y, dim=0)[1].item()
+            y = model(x)
 
-        bar.set_postfix({
-            'name': image_name,
-            'probability': f'{prob:.2f}',
-        })
+            for i in range(y.shape[0]):
+                # prob = torch.max(torch.sigmoid(y[i]), dim=0)[0].item()
+                prob = torch.softmax(y[i], dim=0)[1].item()
 
-        df.loc[len(df.index)] = [image_name, prob]
+                df.loc[len(df.index)] = [name[i], prob]
     df.to_csv(args.csv, index=False)
 
 
