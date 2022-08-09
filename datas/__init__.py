@@ -1,6 +1,7 @@
 from torch.utils.data import DataLoader
 from torchsampler import ImbalancedDatasetSampler
 from torchvision.transforms import *
+from torchvision.transforms.functional import *
 
 from configs import CFG
 from .lane import StarAI2022LaneDataset
@@ -18,6 +19,8 @@ def build_transform():
         Resize((CFG.DATASET.TRANSFORM.RESIZE.HEIGHT, CFG.DATASET.TRANSFORM.RESIZE.WIDTH)),
         RandomHorizontalFlip(p=CFG.DATASET.TRANSFORM.RANDOM_HORIZONTAL_FLIP.PROBABILITY),
         RandomRotation(CFG.DATASET.TRANSFORM.RANDOM_ROTATION.DEGREE, fill=(232, 242, 221)),
+        lambda image: adjust_brightness(image, CFG.DATASET.TRANSFORM.BRIGHTNESS),
+        lambda image: adjust_contrast(image, CFG.DATASET.TRANSFORM.CONTRAST),
         ToTensor(),
         Normalize(mean=CFG.DATASET.TRANSFORM.NORMALIZE.MEAN,
                   std=CFG.DATASET.TRANSFORM.NORMALIZE.STD),
