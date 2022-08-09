@@ -34,12 +34,36 @@ def build_model():
         model = timm.create_model('efficientnet_b3', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
     elif CFG.MODEL.NAME == 'efficientnet-b4':
         model = timm.create_model('efficientnet_b4', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
+    elif CFG.MODEL.NAME == 'efficientnet-el':
+        model = timm.create_model('efficientnet_el', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
     elif CFG.MODEL.NAME == 'noisystudent':
         model = timm.create_model('tf_efficientnet_b0_ns', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
+    elif CFG.MODEL.NAME == 'mixnet-s':
+        model = timm.create_model('mixnet_s', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
+    elif CFG.MODEL.NAME == 'mixnet-m':
+        model = timm.create_model('mixnet_m', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
+    elif CFG.MODEL.NAME == 'mixnet-l':
+        model = timm.create_model('mixnet_l', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
     elif CFG.MODEL.NAME == 'mixnet-xl':
         model = timm.create_model('mixnet_xl', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
+    elif CFG.MODEL.NAME == 'mixnet-xxl':
+        model = timm.create_model('mixnet_xxl', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
     elif CFG.MODEL.NAME == 'mobilenet-v3-large':
         model = timm.create_model('mobilenetv3_large_100', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
+    elif CFG.MODEL.NAME == 'inception-v3':
+        model = timm.create_model('inception_v3', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
+    elif CFG.MODEL.NAME == 'inception-v4':
+        model = timm.create_model('inception_v4', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
+    elif CFG.MODEL.NAME == 'xception-65':
+        model = timm.create_model('xception65', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
+    elif CFG.MODEL.NAME == 'xception-71':
+        model = timm.create_model('xception71', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
+    elif CFG.MODEL.NAME == 'nasnet-large':
+        model = timm.create_model('nasnetalarge', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
+    elif CFG.MODEL.NAME == 'hrnet-18':
+        model = timm.create_model('hrnet_w18', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
+    elif CFG.MODEL.NAME == 'densenet-121':
+        model = timm.create_model('densenet121', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
     else:
         raise NotImplementedError(f'invalid model: {CFG.MODEL.NAME}')
 

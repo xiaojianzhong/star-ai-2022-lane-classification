@@ -1,0 +1,61 @@
+CRITERION:
+  NAME: ce
+DATALOADER:
+  BATCH_SIZE: 4
+  NUM_WORKERS: 4
+DATASET:
+  NAME: lane
+  NUM_CLASSES: 2
+  ROOT: /home/zxj/Documents/star-ai-2022/lane
+  TRANSFORM:
+    ADAPTIVE_CROP:
+      HEIGHTS:
+      - 1200
+      - 1800
+      - 1800
+      LEFTS:
+      - 0
+      - 0
+      - 0
+      ORIGIN_HEIGHTS:
+      - 1560
+      - 2340
+      - 2400
+      ORIGIN_WIDTHS:
+      - 720
+      - 1080
+      - 1080
+      TOPS:
+      - 200
+      - 300
+      - 300
+      WIDTHS:
+      - 720
+      - 1080
+      - 1080
+    NORMALIZE:
+      MEAN:
+      - 0.71415253
+      - 0.71171823
+      - 0.67867415
+      STD:
+      - 0.32737697
+      - 0.33973122
+      - 0.29741103
+    RESIZE:
+      HEIGHT: 1800
+      WIDTH: 1080
+EPOCHS: 8
+ITERATIONS: 58328
+MODEL:
+  NAME: mixnet-l
+OPTIMIZER:
+  LR: 0.01
+  MOMENTUM: 0.0
+  NAME: sgd
+  WEIGHT_DECAY: 0.0005
+SCHEDULER:
+  BY_EPOCH: false
+  BY_ITERATION: true
+  GAMMA: 0.9
+  NAME: poly
