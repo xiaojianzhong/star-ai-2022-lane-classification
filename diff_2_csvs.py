@@ -26,30 +26,6 @@ def main():
     assert len(df1) == len(df2)
     num_rows = len(df1)
 
-    print(f'{args.csv1}')
-    min1 = df1['defect_prob'].min()
-    max1 = df1['defect_prob'].max()
-    mean1 = df1['defect_prob'].mean()
-    std1 = df1['defect_prob'].std()
-    print(f'\tmin: {min1}')
-    print(f'\tmax: {max1}')
-    print(f'\tmean: {mean1}')
-    print(f'\tstd: {std1}')
-    df1['defect_prob'].hist()
-    plt.show()
-
-    print(f'{args.csv2}')
-    min2 = df2['defect_prob'].min()
-    max2 = df2['defect_prob'].max()
-    mean2 = df2['defect_prob'].mean()
-    std2 = df2['defect_prob'].std()
-    print(f'\tmin: {min2}')
-    print(f'\tmax: {max2}')
-    print(f'\tmean: {mean2}')
-    print(f'\tstd: {std2}')
-    df2['defect_prob'].hist()
-    plt.show()
-
     infos = []
     for i in range(num_rows):
         image_name1, prob1 = df1.loc[i, 'imagename'], df1.loc[i, 'defect_prob']
