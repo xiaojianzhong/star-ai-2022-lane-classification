@@ -20,6 +20,7 @@
 - [torch](https://pytorch.org/)
 - [torchinfo](https://github.com/tyleryep/torchinfo)
 - [torchsampler](https://github.com/ufoym/imbalanced-dataset-sampler)
+- [torchtoolbox](https://github.com/PistonY/torch-toolbox)
 - [torchvision](https://pytorch.org/vision/)
 - [tqdm](https://github.com/tqdm/tqdm)
 - [yacs](https://github.com/rbgirshick/yacs)
