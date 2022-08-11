@@ -44,13 +44,12 @@ def main():
     plt.hist(np.array(distances), bins=4)
     plt.show()
 
-    print(f'{args.csv1} <-> {args.csv2}')
     min_distance = min(distances)
     max_distance = max(distances)
     avg_distance = sum(distances) / len(infos)
-    print(f'\tminimum distance: {min_distance}')
-    print(f'\tmaximum distance: {max_distance}')
-    print(f'\taverage distance: {avg_distance}')
+    print(f'minimum distance: {min_distance}')
+    print(f'maximum distance: {max_distance}')
+    print(f'average distance: {avg_distance}')
 
 
 if __name__ == '__main__':
