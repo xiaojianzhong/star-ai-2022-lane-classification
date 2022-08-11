@@ -1,5 +1,5 @@
 import torch.nn as nn
-from torchvision.transforms.functional import crop
+from torchvision.transforms.functional import crop, adjust_brightness, adjust_contrast
 
 
 class AdaptiveCrop(nn.Module):
@@ -30,3 +30,15 @@ class AdaptiveCrop(nn.Module):
     def __repr__(self):
         return self.__class__.__name__ + '()'
 
+
+class AdjustColor(nn.Module):
+    def __init__(self, brightness_factor, contrast_factor):
+        super(AdjustColor, self).__init__()
+
+        self.brightness_factor = brightness_factor
+        self.contrast_factor = contrast_factor
+
+    def forward(self, img):
+        img = adjust_brightness(img, self.brightness_factor)
+        img = adjust_contrast(img, self.contrast_factor)
+        return img
