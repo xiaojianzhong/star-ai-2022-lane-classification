@@ -74,16 +74,21 @@ def main():
     with torch.no_grad():
         test_bar = tqdm(test_dataloader, desc='test', ascii=True)
         for sample in test_bar:
-            x, name = sample['x'], sample['name']
+            x, name = sample['x'], sample['name'][0]
             x = x.cuda()
 
             y = model(x)
+            y = y.squeeze(0)
 
-            for i in range(y.shape[0]):
-                # prob = torch.max(torch.sigmoid(y[i]), dim=0)[0].item()
-                prob = torch.softmax(y[i], dim=0)[1].item()
+            # prob = torch.max(torch.sigmoid(y), dim=0)[0].item()
+            prob = torch.softmax(y, dim=0)[1].item()
 
-                df.loc[len(df.index)] = [name[i], prob]
+            test_bar.set_postfix({
+                'name': name,
+                'probability': f'{prob:.2f}',
+            })
+
+            df.loc[len(df.index)] = [name, prob]
     df.to_csv(args.csv, index=False)
 
 
