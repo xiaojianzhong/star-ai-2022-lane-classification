@@ -36,6 +36,7 @@ CFG.MODEL.NAME = ''  # model name, refer to models/__init__.py
 
 CFG.CRITERION = CN()
 CFG.CRITERION.NAME = ''  # criterion name, refer to criterions/__init__.py
+CFG.CRITERION.SMOOTHING = 0.
 
 CFG.OPTIMIZER = CN()
 CFG.OPTIMIZER.NAME = ''  # optimizer name, refer to optimizers/__init__.py
