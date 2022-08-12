@@ -6,6 +6,7 @@ Read this in other languages: English | [简体中文](README_zh-CN.md)
 
 - [Prerequisites](#prerequisites)
 - [Configuration Name Format](#configuration-name-format)
+- [Preparation](#preparation)
 - [Train](#train)
 - [Submit (After Training)](#submit)
 
@@ -46,6 +47,17 @@ $ pip install -r requirements.txt
 - `{lr}`: basic learning rate for training, e.g. `0.1`, `0.01`.
 - `{scheduler}`: scheduler name like `exp`, `poly`, etc.
 - `{epochs}`: epochs for training, e.g. `8`, `16`.
+
+## <a name="preparation"></a> Preparation
+
+```shell
+$ mkdir DATASET_PATH/train_label/labeled_data/
+$ mv DATASET_PATH/train_label/train_label.csv DATASET_PATH/train_label/labeled_data/
+$ mkdir DATASET_PATH/train_label/unlabeled_data/
+$ python dir2csv.py DATASET_PATH/train_label/unlabeled_data/ DATASET_PATH/train_label/unlabeled_data/train_label.csv
+$ mkdir DATASET_PATH/test_label/
+$ python dir2csv.py DATASET_PATH/test_label/ DATASET_PATH/test_label/test_label.csv
+```
 
 ## <a name="train"></a> Train
 

@@ -34,9 +34,12 @@ def main():
 
     n = len(args.csvs)
     dfs = [pd.read_csv(csv) for csv in args.csvs]
+    num_rows = len(dfs[0])
+    for df in dfs:
+        assert num_rows == len(df)
 
     df = pd.DataFrame(index=dfs[0].index, columns=dfs[0].columns)
-    for i, _ in df.iterrows():
+    for i in range(num_rows):
         df.loc[i, 'imagename'] = dfs[0].loc[i, 'imagename']
 
         probs = np.array([df.loc[i, 'defect_prob'] for df in dfs])

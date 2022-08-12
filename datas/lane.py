@@ -15,7 +15,7 @@ class StarAI2022LaneDataset(Dataset):
 
         if split == 'train':
             images_dir = os.path.join(root, 'train_image', 'labeled_data')
-            csv_path = os.path.join(root, 'train_label', 'train_label.csv')
+            csv_path = os.path.join(root, 'train_label', 'labeled_data', 'train_label.csv')
         elif split == 'test':
             images_dir = os.path.join(root, 'test_images')
             csv_path = os.path.join(root, 'test_label', 'test_label.csv')

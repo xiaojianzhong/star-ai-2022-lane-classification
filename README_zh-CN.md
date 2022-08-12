@@ -6,6 +6,7 @@
 
 - [环境要求](#prerequisites)
 - [配置文件名格式](#configuration-name-format)
+- [准备工作](#preparation)
 - [训练](#train)
 - [（训练完成后）提交](#submit)
 
@@ -46,6 +47,17 @@ $ pip install -r requirements.txt
 - `{lr}`: 用于训练的基础学习率，如 `0.1`，`0.01`
 - `{scheduler}`: 学习率调整器，如 `exp`，`poly`
 - `{epochs}`: 训练轮数，如 `8`，`16`
+
+## <a name="preparation"></a> 准备工作
+
+```shell
+$ mkdir DATASET_PATH/train_label/labeled_data/
+$ mv DATASET_PATH/train_label/train_label.csv DATASET_PATH/train_label/labeled_data/
+$ mkdir DATASET_PATH/train_label/unlabeled_data/
+$ python dir2csv.py DATASET_PATH/train_label/unlabeled_data/ DATASET_PATH/train_label/unlabeled_data/train_label.csv
+$ mkdir DATASET_PATH/test_label/
+$ python dir2csv.py DATASET_PATH/test_label/ DATASET_PATH/test_label/test_label.csv
+```
 
 ## <a name="train"></a> 训练
 
