@@ -46,8 +46,6 @@ def build_model():
         model = timm.create_model('mixnet_l', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
     elif CFG.MODEL.NAME == 'mixnet-xl':
         model = timm.create_model('mixnet_xl', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
-    elif CFG.MODEL.NAME == 'mixnet-xxl':
-        model = timm.create_model('mixnet_xxl', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
     elif CFG.MODEL.NAME == 'mobilenet-v2':
         model = timm.create_model('mobilenetv2_100', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
     elif CFG.MODEL.NAME == 'mobilenet-v3-large':
@@ -70,6 +68,8 @@ def build_model():
         model = timm.create_model('hrnet_w18', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
     elif CFG.MODEL.NAME == 'densenet-121':
         model = timm.create_model('densenet121', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
+    elif CFG.MODEL.NAME == 'densenet-161':
+        model = timm.create_model('densenet161', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
     elif CFG.MODEL.NAME == 'dla-102':
         model = timm.create_model('dla102', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
     elif CFG.MODEL.NAME == 'fbnet-v3-g':
