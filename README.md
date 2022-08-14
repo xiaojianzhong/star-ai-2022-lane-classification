@@ -76,5 +76,7 @@ $ python train.py configs/lane_efficientnet-b0_1800x1080_bs4_ce_sgd_lr0.01_poly0
 ```shell
 $ export CUDA_VISIBLE_DEVICES=0
 $ cd runs/20220804-180000_lane_efficientnet-b0_1800x1080_bs4_ce_sgd_lr0.01_poly0.9_8e_use-new-backbone/
-$ python ../../submit.py config.yaml last.pth
+$ python ../../submit.py config.yaml last.pth --configs DATALOADER.BATCH_SIZE 64
 ```
+
+In order to speed up inferring, you can increase `DATALOADER.BATCH_SIZE` by specifying parameter `--configs`, e.g. `--configs DATALOADER.BATCH_SIZE 64`.
