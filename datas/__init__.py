@@ -55,7 +55,7 @@ def build_dataloader(dataset, split):
                           drop_last=True)
     elif split == 'test':
         return DataLoader(dataset,
-                          batch_size=1,
+                          batch_size=CFG.DATALOADER.BATCH_SIZE,
                           shuffle=False,
                           num_workers=CFG.DATALOADER.NUM_WORKERS,
                           pin_memory=True,
