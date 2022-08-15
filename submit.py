@@ -75,7 +75,7 @@ def main():
         test_bar = tqdm(test_dataloader, desc='test', ascii=True)
         for sample in test_bar:
             x, name = sample['x'], sample['name']
-            x = x.cuda()
+            x = x.cuda(non_blocking=True)
 
             y = model(x)
             # prob = torch.max(torch.sigmoid(y), dim=1)

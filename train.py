@@ -152,7 +152,7 @@ def main():
             writer.add_scalar('lr-iteration', lr, iteration)
 
             x, gt = sample['x'], sample['gt']
-            x, gt = x.cuda(), gt.cuda()
+            x, gt = x.cuda(non_blocking=True), gt.cuda(non_blocking=True)
             y = model(x)
             # pred = (torch.sigmoid(y) > 0.5)
             pred = torch.argmax(y, dim=1)
