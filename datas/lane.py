@@ -27,11 +27,12 @@ class StarAI2022LaneDataset(Dataset):
                 values = line.split(',')
                 self.image_names.append(values[0])
                 self.image_paths.append(os.path.join(images_dir, values[0]))
-                self.labels.append(int(values[1]))
 
                 if values[1:][0] == '0':
+                    self.labels.append(0)
                     self.gts.append(0)
                 else:
+                    self.labels.append(1)
                     self.gts.append(1)
                 # gt = np.zeros(7, dtype=np.int)
                 # for value in values[1:]:
