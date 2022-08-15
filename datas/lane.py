@@ -34,11 +34,6 @@ class StarAI2022LaneDataset(Dataset):
                 else:
                     self.labels.append(1)
                     self.gts.append(1)
-                # gt = np.zeros(7, dtype=np.int)
-                # for value in values[1:]:
-                #     value = int(value)
-                #     if value != 0:
-                #         gt[value - 1] = 1
 
         self.transform = transform
 

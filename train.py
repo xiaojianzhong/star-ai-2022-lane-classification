@@ -154,7 +154,6 @@ def main():
             x, gt = sample['x'], sample['gt']
             x, gt = x.cuda(non_blocking=True), gt.cuda(non_blocking=True)
             y = model(x)
-            # pred = (torch.sigmoid(y) > 0.5)
             pred = torch.argmax(y, dim=1)
 
             loss = criterion(y, gt)

@@ -17,9 +17,7 @@ class Metric:
     def reset(self):
         self.l = 0.
         self.n = 0
-        # self.pred = np.empty((0, CFG.DATASET.NUM_CLASSES), dtype=np.int)
         self.pred = np.empty((0), dtype=np.int)
-        # self.t = np.empty((0, CFG.DATASET.NUM_CLASSES), dtype=np.int)
         self.t = np.empty((0), dtype=np.int)
         self.start = time.time()
         self.end = self.start
@@ -35,15 +33,12 @@ class Metric:
         return self.l / self.n
 
     def precision(self):
-        # return precision_score(self.t, self.pred, average='samples', zero_division='warn')
         return precision_score(self.t, self.pred, zero_division=1)
 
     def recall(self):
-        # return recall_score(self.t, self.pred, average='samples', zero_division='warn')
         return recall_score(self.t, self.pred, zero_division=1)
 
     def f1(self):
-        # return f1_score(self.t, self.pred, average='samples', zero_division='warn')
         return f1_score(self.t, self.pred, zero_division=1)
 
     def seconds(self):

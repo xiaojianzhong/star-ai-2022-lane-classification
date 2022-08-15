@@ -78,7 +78,6 @@ def main():
             x = x.cuda(non_blocking=True)
 
             y = model(x)
-            # prob = torch.max(torch.sigmoid(y), dim=1)
             prob = torch.softmax(y, dim=1)
 
             for i in range(y.shape[0]):
