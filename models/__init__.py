@@ -70,6 +70,8 @@ def build_model():
         model = timm.create_model('densenet121', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
     elif CFG.MODEL.NAME == 'densenet-161':
         model = timm.create_model('densenet161', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
+    elif CFG.MODEL.NAME == 'densenet-169':
+        model = timm.create_model('densenet169', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
     elif CFG.MODEL.NAME == 'dla-102':
         model = timm.create_model('dla102', pretrained=True, num_classes=CFG.DATASET.NUM_CLASSES)
     elif CFG.MODEL.NAME == 'fbnet-v3-g':
