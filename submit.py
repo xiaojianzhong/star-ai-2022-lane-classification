@@ -5,6 +5,7 @@ import warnings
 
 import pandas as pd
 import torch
+# import ttach as tta
 from torch.nn import DataParallel
 from tqdm import tqdm
 
@@ -59,6 +60,10 @@ def main():
     test_dataloader = build_dataloader(test_dataset, 'test')
     # build model
     model = build_model()
+    # model = tta.ClassificationTTAWrapper(model, tta.Compose([
+    #     tta.HorizontalFlip(),
+    #     tta.Rotate90(angles=[0, 45, 90]),
+    # ]))
     model = DataParallel(model)
     model.cuda()
 
@@ -66,6 +71,7 @@ def main():
     if not os.path.isfile(args.checkpoint):
         raise RuntimeError(f'checkpoint {args.checkpoint} not found')
     checkpoint = torch.load(args.checkpoint)
+    # model.module.model.load_state_dict(checkpoint['model']['state_dict'], strict=True)
     model.module.load_state_dict(checkpoint['model']['state_dict'], strict=True)
     logging.info(f'load checkpoint {args.checkpoint}')
 
