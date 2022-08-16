@@ -10,4 +10,5 @@ torchsampler
 torchtoolbox
 torchvision
 tqdm
+ttach
 yacs
