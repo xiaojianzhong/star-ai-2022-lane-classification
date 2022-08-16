@@ -12,6 +12,7 @@ import torch
 import torchinfo
 from torch.nn import DataParallel
 from torch.utils.tensorboard import SummaryWriter
+# from torchtoolbox.tools import mixup_data, mixup_criterion
 from tqdm import tqdm
 
 from configs import CFG
@@ -153,10 +154,12 @@ def main():
 
             x, gt = sample['x'], sample['gt']
             x, gt = x.cuda(non_blocking=True), gt.cuda(non_blocking=True)
+            # x, gt1, gt2, lam = mixup_data(x, gt, alpha=0.2)
             y = model(x)
             pred = torch.argmax(y, dim=1)
 
             loss = criterion(y, gt)
+            # loss = mixup_criterion(criterion, y, gt1, gt2, lam)
 
             optimizer.zero_grad()
             loss.backward()
