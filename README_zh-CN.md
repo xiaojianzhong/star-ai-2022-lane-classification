@@ -9,6 +9,7 @@
 - [准备工作](#preparation)
 - [训练](#train)
 - [（训练完成后）提交](#submit)
+- [（可选）恢复训练](#resume-training)
 
 ## <a name="prerequisites"></a> 环境要求
 
@@ -50,6 +51,8 @@ $ pip install -r requirements.txt
 
 ## <a name="preparation"></a> 准备工作
 
+假定你的数据集存放在 `DATASET_PATH` 路径下，
+
 ```shell
 $ mkdir DATASET_PATH/train_label/labeled_data/
 $ mv DATASET_PATH/train_label/train_label.csv DATASET_PATH/train_label/labeled_data/
@@ -74,9 +77,19 @@ $ python train.py configs/lane_efficientnet-b0_1800x1080_bs4_ce_sgd_lr0.01_poly0
 ## <a name="submit"></a> （训练完成后）提交
 
 ```shell
-$ export CUDA_VISIBLE_DEVICES=0
+$ export CUDA_VISIBLE_DEVICES=0,1
 $ cd runs/20220804-180000_lane_efficientnet-b0_1800x1080_bs4_ce_sgd_lr0.01_poly0.9_8e_use-new-backbone/
 $ python ../../submit.py config.yaml last.pth --configs DATALOADER.BATCH_SIZE 64
 ```
 
 为提高推理速度，你可以通过指定 `--configs` 参数来增加 `DATALOADER.BATCH_SIZE`，如 `--configs DATALOADER.BATCH_SIZE 64`。
+
+## <a name="resume-training"></a> （可选）恢复训练
+
+```shell
+$ python train.py configs/lane_efficientnet-b0_1800x1080_bs4_ce_sgd_lr0.01_poly0.9_8e.yaml \
+                  --checkpoint runs/20220804-180000_lane_efficientnet-b0_1800x1080_bs4_ce_sgd_lr0.01_poly0.9_8e_use-new-backbone/last.pth \
+                  --comment 'resume from previous checkpoint'
+2022-08-04 18:00:00,000: load checkpoint runs/20220804-180000_lane_efficientnet-b0_1800x1080_bs4_ce_sgd_lr0.01_poly0.9_8e_use-new-backbone/last.pth with f1=0.8500
+......
+```

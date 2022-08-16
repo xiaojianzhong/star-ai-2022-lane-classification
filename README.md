@@ -9,6 +9,7 @@ Read this in other languages: English | [简体中文](README_zh-CN.md)
 - [Preparation](#preparation)
 - [Train](#train)
 - [Submit (After Training)](#submit)
+- [(Optional) Resume Training](#resume-training)
 
 ## <a name="prerequisites"></a> Prerequisites
 
@@ -50,6 +51,8 @@ $ pip install -r requirements.txt
 
 ## <a name="preparation"></a> Preparation
 
+Assume that your dataset is stored in `DATASET_PATH`,
+
 ```shell
 $ mkdir DATASET_PATH/train_label/labeled_data/
 $ mv DATASET_PATH/train_label/train_label.csv DATASET_PATH/train_label/labeled_data/
@@ -74,9 +77,19 @@ $ python train.py configs/lane_efficientnet-b0_1800x1080_bs4_ce_sgd_lr0.01_poly0
 ## <a name="submit"></a> Submit (After Training)
 
 ```shell
-$ export CUDA_VISIBLE_DEVICES=0
+$ export CUDA_VISIBLE_DEVICES=0,1
 $ cd runs/20220804-180000_lane_efficientnet-b0_1800x1080_bs4_ce_sgd_lr0.01_poly0.9_8e_use-new-backbone/
 $ python ../../submit.py config.yaml last.pth --configs DATALOADER.BATCH_SIZE 64
 ```
 
 In order to speed up inferring, you can increase `DATALOADER.BATCH_SIZE` by specifying parameter `--configs`, e.g. `--configs DATALOADER.BATCH_SIZE 64`.
+
+## <a name="resume-training"></a> (Optional) Resume Training
+
+```shell
+$ python train.py configs/lane_efficientnet-b0_1800x1080_bs4_ce_sgd_lr0.01_poly0.9_8e.yaml \
+                  --checkpoint runs/20220804-180000_lane_efficientnet-b0_1800x1080_bs4_ce_sgd_lr0.01_poly0.9_8e_use-new-backbone/last.pth \
+                  --comment 'resume from previous checkpoint'
+2022-08-04 18:00:00,000: load checkpoint runs/20220804-180000_lane_efficientnet-b0_1800x1080_bs4_ce_sgd_lr0.01_poly0.9_8e_use-new-backbone/last.pth with f1=0.8500
+...
+```
