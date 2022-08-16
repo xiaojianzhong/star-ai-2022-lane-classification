@@ -77,6 +77,7 @@ def main():
 
     df = pd.DataFrame(columns=['imagename', 'defect_prob'])
 
+    # model.eval()
     with torch.no_grad():
         test_bar = tqdm(test_dataloader, desc='test', ascii=True)
         for sample in test_bar:
