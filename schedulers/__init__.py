@@ -16,6 +16,9 @@ def build_scheduler(optimizer):
     elif CFG.SCHEDULER.NAME == 'poly':
         scheduler = optim.lr_scheduler.LambdaLR(optimizer,
                                                 lr_lambda=lambda iteration: (1 - iteration / CFG.ITERATIONS) ** CFG.SCHEDULER.GAMMA)
+    elif CFG.SCHEDULER.NAME == 'cosine':
+        scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer,
+                                                         T_max=CFG.SCHEDULER.T_MAX)
     else:
         raise NotImplementedError('invalid scheduler: {}'.format(CFG.SCHEDULER.NAME))
     return scheduler
