@@ -5,7 +5,7 @@ import warnings
 
 import pandas as pd
 import torch
-# import ttach as tta
+import ttach as tta
 from torch.nn import DataParallel
 from tqdm import tqdm
 
@@ -26,6 +26,10 @@ def parse_args():
                         type=str,
                         default='submission.csv',
                         help='csv name')
+    parser.add_argument('--tta',
+                        action='store_true',
+                        default=False,
+                        help='whether to use TTA')
     parser.add_argument('--configs',
                         nargs='+',
                         default=[],
@@ -60,10 +64,14 @@ def main():
     test_dataloader = build_dataloader(test_dataset, 'test')
     # build model
     model = build_model()
-    # model = tta.ClassificationTTAWrapper(model, tta.Compose([
-    #     tta.HorizontalFlip(),
-    #     tta.Rotate90(angles=[0, 45, 90]),
-    # ]))
+    if args.tta:
+        tta_transform = tta.Compose([
+            tta.HorizontalFlip(),
+        ])
+    else:
+        tta_transform = tta.Compose([
+        ])
+    model = tta.ClassificationTTAWrapper(model, tta_transform)
     model = DataParallel(model)
     model.cuda()
 
@@ -71,8 +79,7 @@ def main():
     if not os.path.isfile(args.checkpoint):
         raise RuntimeError(f'checkpoint {args.checkpoint} not found')
     checkpoint = torch.load(args.checkpoint)
-    # model.module.model.load_state_dict(checkpoint['model']['state_dict'], strict=True)
-    model.module.load_state_dict(checkpoint['model']['state_dict'], strict=True)
+    model.module.model.load_state_dict(checkpoint['model']['state_dict'], strict=True)
     logging.info(f'load checkpoint {args.checkpoint}')
 
     df = pd.DataFrame(columns=['imagename', 'defect_prob'])
